@@ -52,4 +52,5 @@ try:
         else:
             pass
 except KeyboardInterrupt:
+    print('Start Bankroll: ', start_asset)
     print('\n')
