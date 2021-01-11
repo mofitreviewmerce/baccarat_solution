@@ -9,6 +9,7 @@ result_seq = []
 side_to_bet = ''
 relative_bet_size = 0
 pre_relative_bet_size = 0
+join_shoe = True
 is_result = True
 just_sat_down = True
 bot_name = 'C3'
@@ -35,8 +36,16 @@ try:
                 f = open("../data/log.txt", 'a')
                 f.write(data)
                 f.close()
+                join_shoe = True
 
             relative_bet_size, side_to_bet, streak_side, streak_number = bet_calculator.calculate_action_141020(game_seq)
+
+            if streak_number >= 7:
+                join_shoe = False
+
+            if not join_shoe:
+                relative_bet_size = 0
+
             print(relative_bet_size, side_to_bet, streak_side, streak_number)
             if just_sat_down:
                 if relative_bet_size <= 1:
