@@ -38,6 +38,7 @@ def calculate_streak(seq, streak, side):
 def calculate_action_141020(seq):
     streak, side = calculate_streak(seq, 0, '')
     relative_bet_size = 0
+    side_to_bet = ''
 
     if side == 'B':
         side_to_bet = 'P'
