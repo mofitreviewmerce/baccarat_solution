@@ -7,7 +7,7 @@ status = ''
 prev_status = ''
 game_seq = []
 result_seq = []
-side_for_shoe = ''
+side_to_bet = ''
 relative_bet_size = 0
 pre_relative_bet_size = 0
 is_result = True
@@ -30,22 +30,27 @@ try:
 
             game_seq = scoreboard_loader.load()
             print(game_seq)
+            if not game_seq:
+                data = str(result_seq) + '\n'
+                f = open("./data/log.txt", 'a')
+                f.write(data)
+                f.close()
 
-            relative_bet_size, side_for_shoe, streak_side, streak_number = bet_calculator.calculate_action(game_seq)
-            print(relative_bet_size, side_for_shoe, streak_side, streak_number)
+            relative_bet_size, side_to_bet, streak_side, streak_number = bet_calculator.calculate_action(game_seq)
+            print(relative_bet_size, side_to_bet, streak_side, streak_number)
             if just_sat_down:
                 if relative_bet_size <= 1:
                     just_sat_down = False
-                    clicker.do_click(side_for_shoe, relative_bet_size, pre_relative_bet_size)
-                    message = chatbot.make_message(bot_name, relative_bet_size, side_for_shoe, streak_side,
+                    clicker.do_click(side_to_bet, relative_bet_size, pre_relative_bet_size)
+                    message = chatbot.make_message(bot_name, relative_bet_size, side_to_bet, streak_side,
                                                    streak_number, game_seq, minimum_bet_size)
                 else:
-                    clicker.do_click(side_for_shoe, 0, pre_relative_bet_size)
-                    message = chatbot.make_message(bot_name, 0, side_for_shoe, streak_side,
+                    clicker.do_click(side_to_bet, 0, pre_relative_bet_size)
+                    message = chatbot.make_message(bot_name, 0, side_to_bet, streak_side,
                                                    streak_number, game_seq, minimum_bet_size)
             else:
-                clicker.do_click(side_for_shoe, relative_bet_size, pre_relative_bet_size)
-                message = chatbot.make_message(bot_name, relative_bet_size, side_for_shoe, streak_side, streak_number,
+                clicker.do_click(side_to_bet, relative_bet_size, pre_relative_bet_size)
+                message = chatbot.make_message(bot_name, relative_bet_size, side_to_bet, streak_side, streak_number,
                                                game_seq, minimum_bet_size)
 
             print(message)
