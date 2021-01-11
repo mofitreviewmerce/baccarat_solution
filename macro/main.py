@@ -36,7 +36,7 @@ try:
                 f.write(data)
                 f.close()
 
-            relative_bet_size, side_to_bet, streak_side, streak_number = bet_calculator.calculate_action(game_seq)
+            relative_bet_size, side_to_bet, streak_side, streak_number = bet_calculator.calculate_action_141020(game_seq)
             print(relative_bet_size, side_to_bet, streak_side, streak_number)
             if just_sat_down:
                 if relative_bet_size <= 1:
