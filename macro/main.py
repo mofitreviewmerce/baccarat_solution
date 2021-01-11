@@ -1,4 +1,4 @@
-from . import scoreboard_loader, turn_checker, clicker, bet_calculator, chatbot, round_result
+import scoreboard_loader, turn_checker, clicker, bet_calculator, chatbot, round_result
 import time
 import os
 

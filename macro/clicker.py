@@ -4,7 +4,7 @@ import random
 
 
 # if it is 2, 200M would be minimum size
-minimum_bet_size = 2
+minimum_bet_size = 5
 
 left = (55, 1000)
 right = (770, 1000)
