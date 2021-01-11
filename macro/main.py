@@ -53,9 +53,6 @@ try:
                 message = chatbot.make_message(bot_name, relative_bet_size, side_to_bet, streak_side, streak_number,
                                                game_seq, minimum_bet_size)
 
-            print(message)
-            chatbot.send(message)
-
             pre_relative_bet_size = relative_bet_size
             time.sleep(1)
         elif status == 'NE_Bet' or status == 'NE_CancelBet':
@@ -63,7 +60,7 @@ try:
                 while not is_result:
                     result = round_result.get_result()
                     if result == 'B' or result == 'P' or result == 'T':
-                        if side_to_bet == 'T':
+                        if result == 'T':
                             current_asset += 0
                         elif side_to_bet == result:
                             if side_to_bet == 'B':
@@ -73,7 +70,11 @@ try:
                         elif side_to_bet != result:
                             current_asset -= relative_bet_size * minimum_bet_size
                         result_seq.append(result)
-                        print(result, round(current_asset, 2), start_asset, round((current_asset - start_asset), 2))
+                        result_message = ' ' + result + ' ' + str(round(current_asset, 2)) + ' ' + str(start_asset) + \
+                                         ' ' + str(round((current_asset - start_asset), 2))
+                        message += result_message
+                        chatbot.send(message)
+
                         is_result = True
             else:
                 pass
