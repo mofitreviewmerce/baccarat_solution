@@ -67,11 +67,14 @@ try:
                         if side_to_bet == 'T':
                             current_asset += 0
                         elif side_to_bet == result:
-                            current_asset += relative_bet_size * minimum_bet_size
+                            if side_to_bet == 'B':
+                                current_asset += (relative_bet_size * minimum_bet_size) * 0.95
+                            else:
+                                current_asset += relative_bet_size * minimum_bet_size
                         elif side_to_bet != result:
                             current_asset -= relative_bet_size * minimum_bet_size
                         result_seq.append(result)
-                        print(result, current_asset, start_asset, (current_asset - start_asset))
+                        print(result, round(current_asset, 2), start_asset, round((current_asset - start_asset), 2))
                         is_result = True
             else:
                 pass
