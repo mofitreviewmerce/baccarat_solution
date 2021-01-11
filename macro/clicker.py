@@ -116,6 +116,7 @@ def bet_minimum(bet_side):
 
 def status_error_handle():
     click_button(ground)
+    time.sleep(1)
 
 
 def click_button(button):
