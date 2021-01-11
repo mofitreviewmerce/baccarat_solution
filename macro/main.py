@@ -5,15 +5,17 @@ import os
 status = ''
 prev_status = ''
 game_seq = []
+result = ''
 result_seq = []
 side_to_bet = ''
 relative_bet_size = 0
 pre_relative_bet_size = 0
 is_result = True
 just_sat_down = True
-bot_name = os.getenv('username')[:2].upper()
+bot_name = 'C3'
 minimum_bet_size = clicker.minimum_bet_size
-start_asset = input("Current Bankroll: ")
+start_asset = int(input("Current Bankroll: "))
+current_asset = start_asset
 
 try:
     while True:
@@ -62,8 +64,14 @@ try:
                 while not is_result:
                     result = round_result.get_result()
                     if result == 'B' or result == 'P' or result == 'T':
+                        if side_to_bet == 'T':
+                            current_asset += 0
+                        elif side_to_bet == result:
+                            current_asset += relative_bet_size * minimum_bet_size
+                        elif side_to_bet != result:
+                            current_asset -= relative_bet_size * minimum_bet_size
                         result_seq.append(result)
-                        print(result)
+                        print(result, current_asset, start_asset, (current_asset - start_asset))
                         is_result = True
             else:
                 pass
