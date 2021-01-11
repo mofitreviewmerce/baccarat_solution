@@ -2,7 +2,6 @@ import scoreboard_loader, turn_checker, clicker, bet_calculator, chatbot, round_
 import time
 import os
 
-
 status = ''
 prev_status = ''
 game_seq = []
@@ -32,7 +31,7 @@ try:
             print(game_seq)
             if not game_seq:
                 data = str(result_seq) + '\n'
-                f = open("./data/log.txt", 'a')
+                f = open("../data/log.txt", 'a')
                 f.write(data)
                 f.close()
 
