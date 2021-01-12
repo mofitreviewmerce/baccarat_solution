@@ -5,7 +5,7 @@ def f1(x):
     return x[0]
 
 
-loc_str1 = './data/log_' + 'c1' + '.txt'
+loc_str1 = './data/log_' + 'c4' + '.txt'
 f = open(loc_str1)
 lines = f.readlines()
 f.close()
@@ -40,7 +40,7 @@ for seq in seq_list:
 
         temp_seq = temp_seq[:-streak]
 
-loc_str2 = './data/' + 'c1' + '_distribution.txt'
+loc_str2 = './data/' + 'c4' + '_distribution.txt'
 p = open(loc_str2, 'a')
 res = sorted(distribution_dict.items(), key=f1, reverse=True)
 for i in res:

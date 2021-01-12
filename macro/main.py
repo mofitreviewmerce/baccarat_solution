@@ -12,7 +12,7 @@ pre_relative_bet_size = 0
 join_shoe = True
 is_result = True
 just_sat_down = True
-bot_name = 'C3'
+bot_name = 'C4'
 minimum_bet_size = clicker.minimum_bet_size
 start_asset = int(input("Current Bankroll: "))
 current_asset = start_asset
@@ -33,14 +33,15 @@ try:
             print(game_seq)
             if not game_seq:
                 data = str(result_seq) + '\n'
-                f = open("../data/log.txt", 'a')
+                f = open("../data/log_c4.txt", 'a')
                 f.write(data)
                 f.close()
                 join_shoe = True
+                result_seq = []
 
             relative_bet_size, side_to_bet, streak_side, streak_number = bet_calculator.calculate_action_141020(game_seq)
 
-            if streak_number >= 7:
+            if streak_number >= 1:
                 join_shoe = False
 
             if not join_shoe:
