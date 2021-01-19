@@ -1,6 +1,24 @@
 import math
 
 
+digit_code = ['B', 'B', 'P', 'B', 'P', 'B', 'P', 'B', 'P', 'P']
+
+
+def right_rotate(lists, num):
+    output_list = []
+
+    # Will add values from n to the new list
+    for item in range(len(lists) - num, len(lists)):
+        output_list.append(lists[item])
+
+        # Will add the values before
+    # n to the end of new list
+    for item in range(0, len(lists) - num):
+        output_list.append(lists[item])
+
+    return output_list
+
+
 def side_for_shoe(seq):
     if len(seq) == 0:
         return ''
@@ -35,6 +53,29 @@ def calculate_streak(seq, streak, side):
                 return streak, side
 
 
+def calculate_action_martingale(seq, winning_streak, losing_streak, result_seq, pre_side_to_bet):
+    relative_bet_size = 0
+    streak = 0
+
+    side_to_bet = digit_code[len(seq) % len(digit_code)]
+
+    if winning_streak != 0:
+        side_to_bet = pre_side_to_bet
+        relative_bet_size = 2 ** (math.ceil(winning_streak/2) - 1)
+        streak = winning_streak
+    elif losing_streak != 0:
+        relative_bet_size = 2 ** (losing_streak - 1)
+        streak = losing_streak
+    else:
+        relative_bet_size = 0
+        streak = 0
+
+    print(digit_code, len(seq) % len(digit_code))
+
+    return [relative_bet_size, side_to_bet, '', streak]
+
+
+"""
 def calculate_action_141020(seq):
     streak, side = calculate_streak(seq, 0, '')
     relative_bet_size = 0
@@ -58,6 +99,7 @@ def calculate_action_141020(seq):
         relative_bet_size = 0
 
     return [relative_bet_size, side_to_bet, side, streak]
+"""
 
 
 # 1 3 8 20

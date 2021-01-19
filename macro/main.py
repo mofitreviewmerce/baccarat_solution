@@ -1,18 +1,25 @@
 import scoreboard_loader, turn_checker, clicker, bet_calculator, chatbot, round_result
 import time
+from getmac import get_mac_address as gma
+from datetime import date
 
+today = date.today()
+d3 = today.strftime("%b%d%Y")
 status = ''
 prev_status = ''
 game_seq = []
 result = ''
 result_seq = []
 side_to_bet = ''
+pre_side_to_bet = ''
 relative_bet_size = 0
 pre_relative_bet_size = 0
+losing_streak = 0
+winning_streak = 0
 join_shoe = True
 is_result = True
 just_sat_down = True
-bot_name = 'C4'
+bot_name = gma()[-2:]
 minimum_bet_size = clicker.minimum_bet_size
 start_asset = int(input("Current Bankroll: "))
 current_asset = start_asset
@@ -33,15 +40,16 @@ try:
             print(game_seq)
             if not game_seq:
                 data = str(result_seq) + '\n'
-                f = open("../data/log_c4.txt", 'a')
+                loc = "../data/log_" + bot_name + "_" + d3 + ".txt"
+                f = open(loc, 'a')
                 f.write(data)
                 f.close()
                 join_shoe = True
                 result_seq = []
 
-            relative_bet_size, side_to_bet, streak_side, streak_number = bet_calculator.calculate_action_141020(game_seq)
+            relative_bet_size, side_to_bet, streak_side, streak_number = bet_calculator.calculate_action_martingale(game_seq, winning_streak, losing_streak, result_seq, pre_side_to_bet)
 
-            if streak_number >= 1:
+            if streak_number >= 11:
                 join_shoe = False
 
             if not join_shoe:
@@ -64,6 +72,7 @@ try:
                                                game_seq, minimum_bet_size)
 
             pre_relative_bet_size = relative_bet_size
+            pre_side_to_bet = side_to_bet
             time.sleep(1)
         elif status == 'NE_Bet' or status == 'NE_CancelBet':
             if not is_result:
@@ -73,11 +82,15 @@ try:
                         if result == 'T':
                             current_asset += 0
                         elif side_to_bet == result:
+                            winning_streak += 1
+                            losing_streak = 0
                             if side_to_bet == 'B':
                                 current_asset += (relative_bet_size * minimum_bet_size) * 0.95
                             else:
                                 current_asset += relative_bet_size * minimum_bet_size
                         elif side_to_bet != result:
+                            winning_streak = 0
+                            losing_streak += 1
                             current_asset -= relative_bet_size * minimum_bet_size
                         result_seq.append(result)
                         result_message = ' ' + result + ' ' + str(round(current_asset, 2)) + ' ' + str(start_asset) + \

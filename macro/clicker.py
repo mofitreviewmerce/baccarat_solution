@@ -4,7 +4,7 @@ import random
 
 
 # if it is 2, 200M would be minimum size
-minimum_bet_size = 5
+minimum_bet_size = 1
 
 left = (55, 1000)
 right = (770, 1000)
@@ -12,10 +12,16 @@ right = (770, 1000)
 
 # 100k chip after aligning to leftest using left button
 leftest_first_chip = (155, 1000)
+# 1M chip after aligning to leftest using left button
+leftest_third_chip = (415, 1000)
+# 10M chip after aligning to leftest using left button
+leftest_fifth_chip = (675, 1000)
 # 100M chip after aligning to rightest using right button
 rightest_third_chip = (415, 1000)
 # 1B chip after aligning to rightest using right button
 rightest_fourth_chip = (545, 1000)
+# 10B chip after aligning to rightest using right button
+rightest_fifth_chip = (675, 1000)
 # chip_button = ()
 
 player_side = (540, 560)
@@ -29,6 +35,22 @@ bet = (1740, 1000)
 ground = (1800, 850)
 
 
+def do_click(bet_side, relative_bet_size, pre_relative_bet_size):
+    if relative_bet_size == 0:
+        click_button(left)
+        time.sleep(random.uniform(0.5, 0.7))
+        click_button(leftest_first_chip)
+        time.sleep(random.uniform(0.4, 0.6))
+        click_button(tie_side)
+        print("Bet to: tie ", tie_side)
+    else:
+        bet_amount(minimum_bet_size, relative_bet_size, bet_side)
+
+    time.sleep(random.uniform(0.7, 0.9))
+    click_button(bet)
+
+
+"""
 def do_click(bet_side, relative_bet_size, pre_relative_bet_size):
     if relative_bet_size == 0:
         click_button(left)
@@ -53,11 +75,13 @@ def do_click(bet_side, relative_bet_size, pre_relative_bet_size):
 
     time.sleep(random.uniform(0.7, 0.9))
     click_button(bet)
+"""
 
 
 def bet_amount(minimum_bet_size, bet_num, bet_side):
     num = minimum_bet_size * bet_num
-    num_1b = num // 10
+    num_10b = num // 100
+    num_1b = (num % 100) // 10
     num_100m = num % 10
 
     if bet_side == 'P':
@@ -65,18 +89,26 @@ def bet_amount(minimum_bet_size, bet_num, bet_side):
     elif bet_side == 'B':
         side_button = banker_side
 
-    if num_1b != 0:
-        click_button(right)
+    if num_10b != 0:
+        click_button(left)
         time.sleep(random.uniform(0.5, 0.7))
-        click_button(rightest_fourth_chip)
+        click_button(leftest_fifth_chip)
+        time.sleep(random.uniform(0.4, 0.6))
+        for i in range(num_10b):
+            click_button(side_button)
+            time.sleep(random.uniform(0.1, 0.15))
+    if num_1b != 0:
+        click_button(left)
+        time.sleep(random.uniform(0.5, 0.7))
+        click_button(leftest_third_chip)
         time.sleep(random.uniform(0.4, 0.6))
         for i in range(num_1b):
             click_button(side_button)
             time.sleep(random.uniform(0.1, 0.15))
     if num_100m != 0:
-        click_button(right)
+        click_button(left)
         time.sleep(random.uniform(0.5, 0.7))
-        click_button(rightest_third_chip)
+        click_button(leftest_first_chip)
         time.sleep(random.uniform(0.5, 0.7))
         for i in range(num_100m):
             click_button(side_button)
