@@ -1,4 +1,4 @@
-special_seq = ['P', 'B', 'B', 'P', 'B', 'P', 'B', 'B', 'P', 'P']
+special_seq = ['B', 'B', 'P', 'P', 'B', 'B', 'P', 'P', 'B', 'B']
 
 f = open('./data/log_c543.txt', 'r')
 lines = f.readlines()

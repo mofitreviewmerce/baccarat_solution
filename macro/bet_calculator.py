@@ -1,7 +1,8 @@
 import math
 
 
-digit_code = ['B', 'B', 'P', 'B', 'P', 'B', 'P', 'B', 'P', 'P']
+anon_game_seq = ['B', 'B', 'P', 'P', 'B', 'P', 'T', 'B', 'P', 'T', 'P', 'B', 'P', 'B', 'P', 'B', 'B', 'B', 'B', 'T', 'P', 'B', 'P', 'B', 'T', 'P', 'P', 'B', 'B', 'B', 'B', 'B', 'B', 'P', 'T', 'B', 'P', 'B', 'B', 'B', 'B', 'P', 'B', 'T', 'P', 'B', 'P', 'P', 'B', 'P', 'B', 'P', 'P', 'B', 'B', 'B', 'B', 'T', 'P', 'T']
+deci_game_seq = []
 
 
 def right_rotate(lists, num):
@@ -53,24 +54,46 @@ def calculate_streak(seq, streak, side):
                 return streak, side
 
 
-def calculate_action_martingale(seq, winning_streak, losing_streak, result_seq, pre_side_to_bet):
+def calculate_action_martingale(seq, winning_streak, losing_streak, pre_side_to_bet, round_num, loc, just_sat_down):
     relative_bet_size = 0
     streak = 0
+    global deci_game_seq
+    global anon_game_seq
 
-    side_to_bet = digit_code[len(seq) % len(digit_code)]
+    if just_sat_down or round_num == 0:
+        print("Shoe Started")
+        f = open(loc, 'r')
+        lines = f.readlines()
+        f.close()
+
+        temp_seq = []
+        for i in list(lines[-1]):
+            if i == 'B' or i == 'P':
+                temp_seq.append(i)
+
+        if len(temp_seq) == 0:
+            deci_game_seq = anon_game_seq
+        else:
+            deci_game_seq = temp_seq
+
+    side_to_bet = deci_game_seq[round_num % len(deci_game_seq)]
+
+    print(deci_game_seq)
+    print(round_num % len(deci_game_seq))
+    print(side_to_bet)
 
     if winning_streak != 0:
         side_to_bet = pre_side_to_bet
         relative_bet_size = 2 ** (math.ceil(winning_streak/2) - 1)
         streak = winning_streak
     elif losing_streak != 0:
+        if losing_streak >= 2:
+            side_to_bet == 'B' if pre_side_to_bet == 'P' else 'P'
         relative_bet_size = 2 ** (losing_streak - 1)
         streak = losing_streak
     else:
         relative_bet_size = 0
         streak = 0
-
-    print(digit_code, len(seq) % len(digit_code))
 
     return [relative_bet_size, side_to_bet, '', streak]
 

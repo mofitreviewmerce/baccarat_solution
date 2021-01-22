@@ -14,12 +14,14 @@ side_to_bet = ''
 pre_side_to_bet = ''
 relative_bet_size = 0
 pre_relative_bet_size = 0
+round_num = 0
 losing_streak = 0
 winning_streak = 0
 join_shoe = True
 is_result = True
 just_sat_down = True
 bot_name = gma()[-2:]
+loc = "../data/log_" + bot_name + "_" + d3 + ".txt"
 minimum_bet_size = clicker.minimum_bet_size
 start_asset = int(input("Current Bankroll: "))
 current_asset = start_asset
@@ -40,14 +42,15 @@ try:
             print(game_seq)
             if not game_seq:
                 data = str(result_seq) + '\n'
-                loc = "../data/log_" + bot_name + "_" + d3 + ".txt"
                 f = open(loc, 'a')
                 f.write(data)
                 f.close()
                 join_shoe = True
                 result_seq = []
 
-            relative_bet_size, side_to_bet, streak_side, streak_number = bet_calculator.calculate_action_martingale(game_seq, winning_streak, losing_streak, result_seq, pre_side_to_bet)
+            round_num = len(game_seq)
+            relative_bet_size, side_to_bet, streak_side, streak_number = bet_calculator.calculate_action_martingale(
+                game_seq, winning_streak, losing_streak, pre_side_to_bet, round_num, loc, just_sat_down)
 
             if streak_number >= 11:
                 join_shoe = False
@@ -73,6 +76,7 @@ try:
 
             pre_relative_bet_size = relative_bet_size
             pre_side_to_bet = side_to_bet
+            round_num += 1
             time.sleep(1)
         elif status == 'NE_Bet' or status == 'NE_CancelBet':
             if not is_result:

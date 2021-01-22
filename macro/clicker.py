@@ -118,6 +118,7 @@ def bet_amount(minimum_bet_size, bet_num, bet_side):
 
     return num_1b, num_100m
 
+
 """
 def bet_minimum(bet_side):
     if bet_side == 'P':
