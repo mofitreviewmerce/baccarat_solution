@@ -1,4 +1,6 @@
 import macro.bet_calculator as bet_calculator
+import time
+import sys
 
 
 def calculate_income(side_for_game, seq, pre_relative_bet_size):
@@ -21,14 +23,20 @@ distribution_dict = {}
 last_streak_dict = {}
 
 for i in range(1):
-    sampleLoc = "./data/sample" + str(i+1) + ".txt"
+    # sampleLoc = "./data/sample" + str(i+1) + ".txt"
+    sampleLoc = "./data/8_10000_260121164427.txt"
     f = open(sampleLoc)
 
     add_element = False
     seq_temp = []
     seq_list = []
 
+    count = 0
     while True:
+        if (count % 10000) == 0:
+            print("\r", end='')
+            print("Progress: ", (count // 10000)/10, "%                  ", end='', sep='')
+            sys.stdout.flush()
         line = f.readline()
         if not line:
             break
@@ -43,12 +51,12 @@ for i in range(1):
             add_element = False
             seq_list.append(seq_temp)
             seq_temp = []
+            count += 1
 
     f.close()
 
     total_result = 0
     shoe_counter = 0
-
     for seq in seq_list:
         game_seq = []
         side_for_shoe = ''
@@ -106,7 +114,7 @@ for i in range(1):
 
             temp_seq = temp_seq[:-streak]
 
-        print("Shoe Result:", shoe_result)
+        print("Shoe Result:", shoe_counter)
         shoe_str = str(shoe_result) + "," + "\n"
         p.write(shoe_str)
         total_result += shoe_result

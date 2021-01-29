@@ -2,6 +2,7 @@ import pyautogui
 import clicker
 
 
+# 베팅 버튼을 기준으로 현재 스테이지를 판단함
 def status_check():
     # Designated pixel
     p1_x = 1850

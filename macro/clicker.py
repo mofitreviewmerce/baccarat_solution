@@ -35,6 +35,7 @@ bet = (1740, 1000)
 ground = (1800, 850)
 
 
+# junction between tie and side(either player or banker)
 def do_click(bet_side, relative_bet_size, pre_relative_bet_size):
     if relative_bet_size == 0:
         click_button(left)
@@ -78,6 +79,7 @@ def do_click(bet_side, relative_bet_size, pre_relative_bet_size):
 """
 
 
+# 한쪽 사이드에 지정한 숫자만큼 배팅 bet_num은 단위기준(예: 10이면 10단위)
 def bet_amount(minimum_bet_size, bet_num, bet_side):
     num = minimum_bet_size * bet_num
     num_10b = num // 100
@@ -147,10 +149,12 @@ def bet_minimum(bet_side):
 """
 
 
+# 베팅 버튼이 이상하면 위에 살짝 누르게 함
 def status_error_handle():
     click_button(ground)
     time.sleep(1)
 
 
+# 버튼 클릭 함수: 버튼은 (x좌표, y좌표)로 이루어진 튜플 혹은 리스트
 def click_button(button):
     pyautogui.click(x=button[0], y=button[1])

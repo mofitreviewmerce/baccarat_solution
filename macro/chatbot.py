@@ -2,6 +2,7 @@ from json import dumps
 from httplib2 import Http
 
 
+# make a message to follow the structure to use send method in chatbot.py
 def make_message(bot_name, relative_bet_size, side_for_shoe, streak_side, streak_number, seq, minimum_bet_size):
     num = minimum_bet_size * relative_bet_size
     num_1b = num // 10
@@ -18,6 +19,7 @@ def make_message(bot_name, relative_bet_size, side_for_shoe, streak_side, streak
     return message
 
 
+# send a message to google chat api gateway
 def send(message):
     url = 'https://chat.googleapis.com/v1/spaces/AAAAQbaUcRM/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=J-dduBYQW60VqyODSQjn1R0SgzsQszvqMblCielOjRs%3D'
     bot_message = {

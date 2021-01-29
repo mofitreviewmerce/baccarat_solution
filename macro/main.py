@@ -52,7 +52,7 @@ try:
             relative_bet_size, side_to_bet, streak_side, streak_number = bet_calculator.calculate_action_martingale(
                 game_seq, winning_streak, losing_streak, pre_side_to_bet, round_num, loc, just_sat_down)
 
-            if streak_number >= 11:
+            if streak_number >= 21:
                 join_shoe = False
 
             if not join_shoe:

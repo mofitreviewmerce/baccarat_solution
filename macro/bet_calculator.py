@@ -27,8 +27,8 @@ def side_for_shoe(seq):
         if seq[0] == 'T':
             return side_for_shoe(seq[1:])
         elif seq[0] == 'B' or seq[0] == 'P':
-            # return seq[0]
-            return 'P'
+            return seq[0]
+            # return 'P'
         else:
             return ''
 
@@ -160,7 +160,7 @@ def calculate_action_13820(seq):
     return [relative_bet_size, side_for_game, side, streak]
 """
 
-"""
+
 def calculate_action(seq):
     relative_bet_size = 0
 
@@ -196,9 +196,12 @@ def calculate_action(seq):
                 streak_side = ''
         seq = seq[1:]
 
+    print("1")
     relative_bet_size = calculate_bet_size(side_for_shoe, streak_side, streak_num)
 
-    return [relative_bet_size, side_for_shoe]
+    print("1")
+
+    return [relative_bet_size, side_for_shoe, streak_side, streak_num]
 
 
 def calculate_bet_size(side_for_shoe, streak_side, streak_num):
@@ -219,6 +222,3 @@ def calculate_bet_size(side_for_shoe, streak_side, streak_num):
                 relative_bet_size = 2 ** streak_num
 
     return relative_bet_size
-"""
-
-
